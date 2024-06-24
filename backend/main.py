@@ -2,7 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 from pydantic import BaseModel
-import xml.etree.ElementTree as ET
+from xmljson import badgerfish as bf
+from xml.etree.ElementTree import fromstring, ElementTree
+import json
 
 app = FastAPI()
 
@@ -20,13 +22,18 @@ app.add_middleware(
 
 class TermRequest(BaseModel):
     term: str
+    start: int
+    end: int
+
+class PubInfoRequest(BaseModel):
+    pub_id:int
 
 @app.post("/search-ids")  
 def search_publication_uids(request_data: TermRequest):
     term = request_data.term
-    # start = str(request_data.start)
-    # end = str(request_data.end)
-    firstUrl = f"{baseUrl}/esearch.fcgi?db=pubmed&term={term}&retmode=JSON"
+    start = str(request_data.start)
+    end = str(request_data.end)
+    firstUrl = f"{baseUrl}/esearch.fcgi?db=pubmed&term={term}&retstart={start}&retmax={end}&retmode=JSON"
     
     try:
         response = requests.get(firstUrl)
@@ -38,45 +45,25 @@ def search_publication_uids(request_data: TermRequest):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Error connecting to NCBI API: {str(e)}")
     
-# @app.post("/fetch-info")
-# def fetch_publication_info():
-
-#     firstUrl = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=19393038,30242208,29453458"
-#     try:
-#         response = requests.get(firstUrl)
-#         response.raise_for_status()  
-#         # return response.json()
-        
-#     except requests.exceptions.RequestException as e:
-#         raise HTTPException(status_code=500, detail=f"Error connecting to NCBI API: {str(e)}")
 
 @app.post("/fetch-info")
-def fetch_publication_info():
+def fetch_publication_info(request_data: PubInfoRequest):
+    pub_id = str(request_data.pub_id)
     # URL to fetch PubMed information for given IDs in XML format
-    firstUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=19393038,30242208,29453458&retmode=xml"
+    
+    firstUrl = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={pub_id}&retmode=xml"
     
     try:
         response = requests.get(firstUrl)
         response.raise_for_status()  # Raise error for bad response status
         
         # Parse XML response
-        root = ET.fromstring(response.content)
+        xml_data = fromstring(response.content)
         
-        # Convert XML to JSON format (using a simple conversion approach)
-        data = xml_to_json(root)
+        # Convert XML to JSON format using xmljson
+        json_data = bf.data(xml_data)
         
-        return data  # Return JSON data
+        return json_data  # Return JSON data
         
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Error connecting to NCBI API: {str(e)}")
-
-def xml_to_json(xml):
-    """
-    Convert an XML ElementTree object to JSON format.
-    """
-    if isinstance(xml, ET.Element):
-        return {
-            xml.tag: xml_to_json(xml.text) if xml.text else {child.tag: xml_to_json(child) for child in xml}
-        }
-    else:
-        return xml

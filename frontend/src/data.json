@@ -1,0 +1,351 @@
+{
+  "PubmedArticleSet": {
+    "PubmedArticle": {
+      "MedlineCitation": {
+        "@Status": "Publisher",
+        "@Owner": "NLM",
+        "@IndexingMethod": "Automated",
+        "PMID": {
+          "@Version": 1,
+          "$": 38913112
+        },
+        "DateRevised": {
+          "Year": {
+            "$": 2024
+          },
+          "Month": {
+            "$": 6
+          },
+          "Day": {
+            "$": 24
+          }
+        },
+        "Article": {
+          "@PubModel": "Print-Electronic",
+          "Journal": {
+            "ISSN": {
+              "@IssnType": "Electronic",
+              "$": "1532-4303"
+            },
+            "JournalIssue": {
+              "@CitedMedium": "Internet",
+              "PubDate": {
+                "Year": {
+                  "$": 2024
+                },
+                "Month": {
+                  "$": "Jun"
+                },
+                "Day": {
+                  "$": 24
+                }
+              }
+            },
+            "Title": {
+              "$": "The Journal of asthma : official journal of the Association for the Care of Asthma"
+            },
+            "ISOAbbreviation": {
+              "$": "J Asthma"
+            }
+          },
+          "ArticleTitle": {
+            "$": "Improving Asthma Control Test completion rates across a multi-site pediatric pulmonary clinic network: a quality improvement initiative."
+          },
+          "Pagination": {
+            "StartPage": {
+              "$": 1
+            },
+            "EndPage": {
+              "$": 9
+            },
+            "MedlinePgn": {
+              "$": "1-9"
+            }
+          },
+          "ELocationID": {
+            "@EIdType": "doi",
+            "@ValidYN": "Y",
+            "$": "10.1080/02770903.2024.2371004"
+          },
+          "Abstract": {
+            "AbstractText": {
+              "i": [
+                {
+                  "$": "Objective:"
+                },
+                {
+                  "$": "Methods:"
+                },
+                {
+                  "$": "Results:"
+                },
+                {
+                  "$": "Conclusion:"
+                }
+              ]
+            }
+          },
+          "AuthorList": {
+            "@CompleteYN": "Y",
+            "Author": [
+              {
+                "@ValidYN": "Y",
+                "LastName": {
+                  "$": "Lin"
+                },
+                "ForeName": {
+                  "$": "JennyH"
+                },
+                "Initials": {
+                  "$": "J"
+                },
+                "AffiliationInfo": [
+                  {
+                    "Affiliation": {
+                      "$": "Division of Pulmonary and Sleep Medicine, The Children's Hospital of Philadelphia, Philadelphia, PA, USA."
+                    }
+                  },
+                  {
+                    "Affiliation": {
+                      "$": "Center for Healthcare Improvement and Patient Safety, Perelman School of Medicine, University of Pennsylvania, Philadelphia, PA."
+                    }
+                  }
+                ]
+              },
+              {
+                "@ValidYN": "Y",
+                "LastName": {
+                  "$": "Huang"
+                },
+                "ForeName": {
+                  "$": "Elena"
+                },
+                "Initials": {
+                  "$": "E"
+                },
+                "AffiliationInfo": {
+                  "Affiliation": {
+                    "$": "Department of Pediatrics, The Children's Hospital of Philadelphia, Philadelphia, PA, USA."
+                  }
+                }
+              },
+              {
+                "@ValidYN": "Y",
+                "LastName": {
+                  "$": "Rauch"
+                },
+                "ForeName": {
+                  "$": "Bridget"
+                },
+                "Initials": {
+                  "$": "B"
+                },
+                "AffiliationInfo": {
+                  "Affiliation": {
+                    "$": "Department of Pediatrics, The Children's Hospital of Philadelphia, Philadelphia, PA, USA."
+                  }
+                }
+              },
+              {
+                "@ValidYN": "Y",
+                "LastName": {
+                  "$": "Young"
+                },
+                "ForeName": {
+                  "$": "LisaR"
+                },
+                "Initials": {
+                  "$": "L"
+                },
+                "AffiliationInfo": {
+                  "Affiliation": {
+                    "$": "Division of Pulmonary and Sleep Medicine, The Children's Hospital of Philadelphia, Philadelphia, PA, USA."
+                  }
+                }
+              },
+              {
+                "@ValidYN": "Y",
+                "LastName": {
+                  "$": "Allen"
+                },
+                "ForeName": {
+                  "$": "Julian"
+                },
+                "Initials": {
+                  "$": "J"
+                },
+                "AffiliationInfo": {
+                  "Affiliation": {
+                    "$": "Division of Pulmonary and Sleep Medicine, The Children's Hospital of Philadelphia, Philadelphia, PA, USA."
+                  }
+                }
+              },
+              {
+                "@ValidYN": "Y",
+                "LastName": {
+                  "$": "Myers"
+                },
+                "ForeName": {
+                  "$": "JenniferS"
+                },
+                "Initials": {
+                  "$": "J"
+                },
+                "AffiliationInfo": [
+                  {
+                    "Affiliation": {
+                      "$": "Department of Medicine, Perelman School of Medicine, University of Pennsylvania, Philadelphia, PA, USA."
+                    }
+                  },
+                  {
+                    "Affiliation": {
+                      "$": "Center for Healthcare Improvement and Patient Safety, Perelman School of Medicine, University of Pennsylvania, Philadelphia, PA."
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "Language": {
+            "$": "eng"
+          },
+          "PublicationTypeList": {
+            "PublicationType": {
+              "@UI": "D016428",
+              "$": "Journal Article"
+            }
+          },
+          "ArticleDate": {
+            "@DateType": "Electronic",
+            "Year": {
+              "$": 2024
+            },
+            "Month": {
+              "$": 6
+            },
+            "Day": {
+              "$": 24
+            }
+          }
+        },
+        "MedlineJournalInfo": {
+          "Country": {
+            "$": "England"
+          },
+          "MedlineTA": {
+            "$": "J Asthma"
+          },
+          "NlmUniqueID": {
+            "$": 8106454
+          },
+          "ISSNLinking": {
+            "$": "0277-0903"
+          }
+        },
+        "CitationSubset": {
+          "$": "IM"
+        },
+        "KeywordList": {
+          "@Owner": "NOTNLM",
+          "Keyword": [
+            {
+              "@MajorTopicYN": "N",
+              "$": "Asthma Control Test"
+            },
+            {
+              "@MajorTopicYN": "N",
+              "$": "electronic patient portal"
+            },
+            {
+              "@MajorTopicYN": "N",
+              "$": "patient-reported outcome"
+            },
+            {
+              "@MajorTopicYN": "N",
+              "$": "pediatric pulmonary"
+            },
+            {
+              "@MajorTopicYN": "N",
+              "$": "pulmonology"
+            }
+          ]
+        }
+      },
+      "PubmedData": {
+        "History": {
+          "PubMedPubDate": [
+            {
+              "@PubStatus": "medline",
+              "Year": {
+                "$": 2024
+              },
+              "Month": {
+                "$": 6
+              },
+              "Day": {
+                "$": 24
+              },
+              "Hour": {
+                "$": 12
+              },
+              "Minute": {
+                "$": 42
+              }
+            },
+            {
+              "@PubStatus": "pubmed",
+              "Year": {
+                "$": 2024
+              },
+              "Month": {
+                "$": 6
+              },
+              "Day": {
+                "$": 24
+              },
+              "Hour": {
+                "$": 12
+              },
+              "Minute": {
+                "$": 42
+              }
+            },
+            {
+              "@PubStatus": "entrez",
+              "Year": {
+                "$": 2024
+              },
+              "Month": {
+                "$": 6
+              },
+              "Day": {
+                "$": 24
+              },
+              "Hour": {
+                "$": 11
+              },
+              "Minute": {
+                "$": 4
+              }
+            }
+          ]
+        },
+        "PublicationStatus": {
+          "$": "aheadofprint"
+        },
+        "ArticleIdList": {
+          "ArticleId": [
+            {
+              "@IdType": "pubmed",
+              "$": 38913112
+            },
+            {
+              "@IdType": "doi",
+              "$": "10.1080/02770903.2024.2371004"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,19 +1,37 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [termValue, setTermValue] = useState<string>("");
   const [uidList, setUIDList] = useState([]);
+  const [page, setPage] = useState("1");
+
+  useEffect(() => {
+    console.log("page: ", page);
+  }, [page]);
+
+  const handleChange = (event: any) => {
+    const inputRegex = /^[0-9\b]+$/;
+    if (event.target.value === "" || inputRegex.test(event.target.value)) {
+      setPage(event.target.value);
+    }
+  };
 
   const searchPublication = async () => {
+    setUIDList([]);
     const formatTermValue: string = termValue.split(" ").join("+");
     try {
-      const response = await fetch("http://localhost:8000/search", {
+      const response = await fetch("http://localhost:8000/search-ids", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ term: formatTermValue }),
+        body: JSON.stringify({
+          term: formatTermValue,
+          start: page,
+          end: parseInt(page) + 5,
+        }),
       });
 
       if (!response.ok) {
@@ -25,6 +43,7 @@ export default function Home() {
       const uids = data["esearchresult"]["idlist"];
       setUIDList(uids);
       // setResponseData(data);
+      setTermValue("");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -54,11 +73,28 @@ export default function Home() {
           Search
         </button>
       </div>
-      <ul>
+      <ul className="my-4">
         {uidList.map((uid, idx) => {
-          return <li key={uid}>{uid}</li>;
+          return (
+            <li key={uid}>
+              <Link href={`/publication/${uid}`} as={`/publication/${uid}`}>
+                {uid}
+              </Link>
+            </li>
+          );
         })}
       </ul>
+      {uidList.length > 0 && (
+        <div className="flex gap-4">
+          <div className="flex items-center">Page: </div>
+          <input
+            // type="number"
+            className="w-10 h-10 border border-zinc-400 px-3"
+            value={page}
+            onChange={handleChange}
+          />
+        </div>
+      )}
     </main>
   );
 }
