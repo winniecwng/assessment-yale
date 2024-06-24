@@ -1,9 +1,9 @@
-from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 from pydantic import BaseModel
 from xmljson import badgerfish as bf
-from xml.etree.ElementTree import fromstring, ElementTree
+from xml.etree.ElementTree import fromstring
 import json
 
 app = FastAPI()
