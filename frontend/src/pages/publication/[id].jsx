@@ -67,7 +67,7 @@ const PublicationPage = () => {
         ] || null;
 
       const pubMesh =
-        baseData["MeshHeadingList"]["MeshHeading"].map((meshInfo, idx) => {
+        baseData["MeshHeadingList"]?.["MeshHeading"].map((meshInfo, idx) => {
           const { DescriptorName } = meshInfo;
 
           return DescriptorName["$"];
