@@ -59,17 +59,15 @@ const PublicationPage = () => {
         setAbstractOrder(order);
       }
 
-      const pubTitle = baseData?.["Article"]?.["ArticleTitle"]["$"] || "";
-      const pubAuthorList = formattedAuthorList || [];
-      const pubJournal =
-        baseData?.["Article"]?.["Journal"]?.["Title"]?.["$"] || "";
+      const pubTitle = baseData["Article"]["ArticleTitle"]["$"] || "";
+      const pubJournal = baseData["Article"]["Journal"]["Title"]["$"] || "";
       const pubYear =
-        baseData?.["Article"]?.["Journal"]?.["JournalIssue"]?.["PubDate"]?.[
-          "Year"
-        ]?.["$"] || null;
+        baseData["Article"]["Journal"]["JournalIssue"]["PubDate"]["Year"][
+          "$"
+        ] || null;
 
       const pubMesh =
-        baseData?.["MeshHeadingList"]?.["MeshHeading"].map((meshInfo, idx) => {
+        baseData["MeshHeadingList"]["MeshHeading"].map((meshInfo, idx) => {
           const { DescriptorName } = meshInfo;
 
           return DescriptorName["$"];
@@ -86,12 +84,12 @@ const PublicationPage = () => {
 
   const fetchPubInfo = async () => {
     try {
-      const response = await fetch("http://localhost:8000/fetch-info", {
-        method: "POST",
+      const response = await fetch(`http://localhost:8000/fetch-info/${id}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ pub_id: id }),
+        // body: JSON.stringify({ pub_id: id }),
       });
 
       if (!response.ok) {

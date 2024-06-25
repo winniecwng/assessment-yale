@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   const [termValue, setTermValue] = useState<string>("");
+  const [currentTerm, setCurrentTerm] = useState<string>("");
   const [uidList, setUIDList] = useState([]);
   const [page, setPage] = useState("1");
 
@@ -18,8 +19,18 @@ export default function Home() {
     }
   };
 
+  const onEnterEvent = (e: any) => {
+    if (e.keyCode === 13) {
+      searchPublication();
+    }
+  };
+
   const searchPublication = async () => {
     setUIDList([]);
+    if (currentTerm !== termValue) {
+      setCurrentTerm(termValue);
+      setPage("1");
+    }
     const formatTermValue: string = termValue.split(" ").join("+");
     try {
       const response = await fetch("http://localhost:8000/search-ids", {
@@ -29,8 +40,7 @@ export default function Home() {
         },
         body: JSON.stringify({
           term: formatTermValue,
-          start: page,
-          end: parseInt(page) + 5,
+          start: 5 * parseInt(page) - 4,
         }),
       });
 
@@ -39,11 +49,7 @@ export default function Home() {
       }
 
       const data = await response.json();
-      console.log("data: ", data);
-      const uids = data["esearchresult"]["idlist"];
-      setUIDList(uids);
-      // setResponseData(data);
-      setTermValue("");
+      setUIDList(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -62,6 +68,7 @@ export default function Home() {
           type="text"
           value={termValue}
           onChange={(e) => setTermValue(e.target.value)}
+          onKeyDown={onEnterEvent}
         />
 
         <button
@@ -73,13 +80,20 @@ export default function Home() {
           Search
         </button>
       </div>
-      <ul className="my-4">
+      <ul className="mt-4 mb-8 flex flex-col gap-8">
         {uidList.map((uid, idx) => {
+          const { pmid, pub_title, pub_year } = uid;
           return (
-            <li key={uid}>
-              <Link href={`/publication/${uid}`} as={`/publication/${uid}`}>
-                {uid}
+            <li key={pmid}>
+              <Link
+                href={`/publication/${pmid}`}
+                as={`/publication/${pmid}`}
+                className="text-blue-700 underline"
+              >
+                {pub_title}
               </Link>
+              <div>PMID: {pmid}</div>
+              <div>Publication Year: {pub_year}</div>
             </li>
           );
         })}
@@ -88,10 +102,10 @@ export default function Home() {
         <div className="flex gap-4">
           <div className="flex items-center">Page: </div>
           <input
-            // type="number"
             className="w-10 h-10 border border-zinc-400 px-3"
             value={page}
             onChange={handleChange}
+            onKeyDown={onEnterEvent}
           />
         </div>
       )}
