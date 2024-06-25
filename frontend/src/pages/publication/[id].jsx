@@ -107,16 +107,20 @@ const PublicationPage = () => {
   };
 
   return (
-    <div className="border-4 border-red-500">
-      {title && <div>Title: {title}</div>}
-      {abstractTextOnly && (
+    <div className="m-4 flex flex-col gap-4">
+      {title && (
         <div>
-          <span>Abstract:</span> <p>{abstractTextOnly}</p>
+          <span className="font-bold">Title:</span> {title}
+        </div>
+      )}
+      {abstractTextOnly && (
+        <div className="flex gap-4">
+          <span className="font-bold">Abstract:</span> <p>{abstractTextOnly}</p>
         </div>
       )}
       {abstractOrder.length !== 0 && (
         <>
-          <div>Abstract:</div>
+          <div className="font-bold">Abstract:</div>
           <div className="flex flex-col gap-4">
             {abstractOrder.map((abstractTitle, idx) => {
               return (
@@ -134,11 +138,16 @@ const PublicationPage = () => {
           )
         </>
       )}
-      {id && <div>PMID: {id}</div>}
-      <div>
+      {id && (
+        <div>
+          <span className="font-bold">PMID: </span>
+          {id}
+        </div>
+      )}
+      <div className="flex gap-4">
         {authorList.length !== 0 && (
           <>
-            <div>Author List</div>
+            <div className="font-bold">Author List:</div>
             <ul>
               {authorList.map((author, idx) => {
                 return <li key={idx}>{author}</li>;
@@ -147,8 +156,19 @@ const PublicationPage = () => {
           </>
         )}
       </div>
-      {journal && <div>Journal: {journal}</div>}
-      {publicationYear && <div>Publication: {publicationYear}</div>}
+      {journal && (
+        <div>
+          {" "}
+          <span className="font-bold">Journal: </span>
+          {journal}
+        </div>
+      )}
+      {publicationYear && (
+        <div>
+          <span className="font-bold">Publication: </span>
+          {publicationYear}
+        </div>
+      )}
 
       {meshTerms.length !== 0 && (
         <ul>
@@ -159,7 +179,10 @@ const PublicationPage = () => {
         </ul>
       )}
 
-      <Link href={`https://pubmed.ncbi.nlm.nih.gov/${id}/`}>
+      <Link
+        href={`https://pubmed.ncbi.nlm.nih.gov/${id}/`}
+        className="text-blue-700 underline"
+      >
         Link to publication
       </Link>
     </div>
