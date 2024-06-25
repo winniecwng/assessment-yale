@@ -8,11 +8,12 @@ const PublicationPage = () => {
 
   const [title, setTitle] = useState("");
   const [abstract, setAbstract] = useState({});
+  const [abstractTextOnly, setAbstractTextOnly] = useState("");
   const [authorList, setAuthorList] = useState([]);
   const [journal, setJournal] = useState("");
   const [publicationYear, setPublicationYear] = useState();
   const [meshTerms, setMeshTerms] = useState([]);
-  const [pubData, setPubData] = useState({});
+  const [pubData, setPubData] = useState(null);
 
   const [abstractOrder, setAbstractOrder] = useState([]);
 
@@ -25,30 +26,38 @@ const PublicationPage = () => {
   useEffect(() => {
     if (pubData) {
       const baseData =
-        pubData?.["PubmedArticleSet"]?.["PubmedArticle"]?.["MedlineCitation"];
+        pubData["PubmedArticleSet"]["PubmedArticle"]["MedlineCitation"];
 
-      const formattedAuthorList = baseData?.["Article"]?.["AuthorList"][
-        "Author"
-      ].map((authorInfo: any, idx: any) => {
-        const firstName = authorInfo["ForeName"]["$"];
-        const lastName = authorInfo["LastName"]["$"];
+      const rawAuthorList = baseData["Article"]["AuthorList"]["Author"];
 
-        return `${firstName} ${lastName}`;
-      });
+      const formattedAuthorList =
+        rawAuthorList.map((authorInfo, idx) => {
+          const firstName = authorInfo["ForeName"]["$"];
+          const lastName = authorInfo["LastName"]["$"];
 
-      const abstractResult: any = {};
-      const order: any = [];
+          return `${firstName} ${lastName}`;
+        }) || [];
 
-      baseData?.["Article"]?.["Abstract"]?.["AbstractText"]?.map(
-        (info: any, idx: any) => {
+      const isAbstract =
+        baseData["Article"]["Abstract"]["AbstractText"]["$"] ||
+        baseData["Article"]["Abstract"]["AbstractText"] ||
+        null;
+
+      if (typeof isAbstract === "string") {
+        setAbstractTextOnly(isAbstract);
+      } else {
+        const abstractResult = {};
+        const order = [];
+
+        isAbstract.map((info, idx) => {
           const key = info["@Label"];
           const value = info["$"];
           order.push(key);
           abstractResult[key] = value;
-        }
-      );
-
-      setAbstractOrder(order);
+        });
+        setAbstract(abstractResult);
+        setAbstractOrder(order);
+      }
 
       const pubTitle = baseData?.["Article"]?.["ArticleTitle"]["$"] || "";
       const pubAuthorList = formattedAuthorList || [];
@@ -59,20 +68,16 @@ const PublicationPage = () => {
           "Year"
         ]?.["$"] || null;
 
-      const pubAbstract = abstractResult || {};
-
       const pubMesh =
-        baseData?.["MeshHeadingList"]?.["MeshHeading"].map(
-          (meshInfo: any, idx: any) => {
-            const { DescriptorName } = meshInfo;
+        baseData?.["MeshHeadingList"]?.["MeshHeading"].map((meshInfo, idx) => {
+          const { DescriptorName } = meshInfo;
 
-            return DescriptorName["$"];
-          }
-        ) || [];
+          return DescriptorName["$"];
+        }) || [];
 
       setTitle(pubTitle);
-      setAbstract(pubAbstract);
-      setAuthorList(pubAuthorList);
+
+      setAuthorList(formattedAuthorList);
       setJournal(pubJournal);
       setPublicationYear(pubYear);
       setMeshTerms(pubMesh);
@@ -94,7 +99,7 @@ const PublicationPage = () => {
       }
 
       const data = await response.json();
-      console.log("data: ", data);
+
       setPubData(data);
     } catch (error) {
       console.error("Error:", error);
@@ -102,13 +107,18 @@ const PublicationPage = () => {
   };
 
   return (
-    <div>
+    <div className="border-4 border-red-500">
       {title && <div>Title: {title}</div>}
+      {abstractTextOnly && (
+        <div>
+          <span>Abstract:</span> <p>{abstractTextOnly}</p>
+        </div>
+      )}
       {abstractOrder.length !== 0 && (
         <>
           <div>Abstract:</div>
           <div className="flex flex-col gap-4">
-            {abstractOrder.map((abstractTitle: any, idx: any) => {
+            {abstractOrder.map((abstractTitle, idx) => {
               return (
                 <div>
                   <span className="font-extrabold">
@@ -116,11 +126,12 @@ const PublicationPage = () => {
                       abstractTitle[0] + abstractTitle.slice(1).toLowerCase()
                     }: `}
                   </span>
-                  {/* {abstract[abstractTitle]} */}
+                  {abstract[abstractTitle]}
                 </div>
               );
             })}
           </div>
+          )
         </>
       )}
       {id && <div>PMID: {id}</div>}

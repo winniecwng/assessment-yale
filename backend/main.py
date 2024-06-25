@@ -10,8 +10,12 @@ app = FastAPI()
 
 baseUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 
-origins = ["*"]
-
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:3000/",
+]
+# origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
