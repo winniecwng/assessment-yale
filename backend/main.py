@@ -41,6 +41,7 @@ class PubInfoRequest(BaseModel):
 def search_publication_uids(request_data: TermRequest):
     term = request_data.term
     start = str(request_data.start)
+    # firstUrl = f"{baseUrl}/esearch.fcgi?db=pubmed&term={term}&retstart={start}&retmax=1&retmode=JSON"
     firstUrl = f"{baseUrl}/esearch.fcgi?db=pubmed&term={term}&retstart={start}&retmax=3&retmode=JSON"
     
     
@@ -72,6 +73,7 @@ def search_publication_uids(request_data: TermRequest):
 
 @app.get("/fetch-info/{pub_id}")
 def fetch_publication_info(pub_id: str):
+    # firstUrl = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={pub_id}&retmode=xml"
     firstUrl = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={pub_id}&retmode=xml&api_key={API_KEY}"
     
     try:

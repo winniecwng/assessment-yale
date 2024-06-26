@@ -84,13 +84,6 @@ const Search = () => {
           const { pmid, pub_title, pub_year } = uid;
           return (
             <li key={pmid}>
-              {/* <Link
-                href={`/publication/${pmid}`}
-                as={`/publication/${pmid}`}
-                className="text-blue-700 underline"
-              >
-                {pub_title}
-              </Link> */}
               <Link
                 to={`/publication/${pmid}`}
                 className="text-blue-700 underline"
