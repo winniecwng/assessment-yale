@@ -1,10 +1,9 @@
-"use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
-export default function Home() {
-  const [termValue, setTermValue] = useState<string>("");
-  const [currentTerm, setCurrentTerm] = useState<string>("");
+const Search = () => {
+  const [termValue, setTermValue] = useState("");
+  const [currentTerm, setCurrentTerm] = useState("");
   const [uidList, setUIDList] = useState([]);
   const [page, setPage] = useState("1");
 
@@ -12,14 +11,14 @@ export default function Home() {
     console.log("page: ", page);
   }, [page]);
 
-  const handleChange = (event: any) => {
+  const handleChange = (event) => {
     const inputRegex = /^[0-9\b]+$/;
     if (event.target.value === "" || inputRegex.test(event.target.value)) {
       setPage(event.target.value);
     }
   };
 
-  const onEnterEvent = (e: any) => {
+  const onEnterEvent = (e) => {
     if (e.keyCode === 13) {
       searchPublication();
     }
@@ -31,7 +30,7 @@ export default function Home() {
       setCurrentTerm(termValue);
       setPage("1");
     }
-    const formatTermValue: string = termValue.split(" ").join("+");
+    const formatTermValue = termValue.split(" ").join("+");
     try {
       const response = await fetch("http://localhost:8000/search-ids", {
         method: "POST",
@@ -85,9 +84,15 @@ export default function Home() {
           const { pmid, pub_title, pub_year } = uid;
           return (
             <li key={pmid}>
-              <Link
+              {/* <Link
                 href={`/publication/${pmid}`}
                 as={`/publication/${pmid}`}
+                className="text-blue-700 underline"
+              >
+                {pub_title}
+              </Link> */}
+              <Link
+                to={`/publication/${pmid}`}
                 className="text-blue-700 underline"
               >
                 {pub_title}
@@ -111,4 +116,6 @@ export default function Home() {
       )}
     </main>
   );
-}
+};
+
+export default Search;

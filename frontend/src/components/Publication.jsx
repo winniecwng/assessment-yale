@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { useParams } from "react-router-dom";
 
 const PublicationPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
+  const { id } = useParams();
 
   const [title, setTitle] = useState("");
   const [abstract, setAbstract] = useState({});
@@ -16,6 +14,27 @@ const PublicationPage = () => {
   const [pubData, setPubData] = useState(null);
 
   const [abstractOrder, setAbstractOrder] = useState([]);
+
+  const fetchPubInfo = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/fetch-info/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      setPubData(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -82,28 +101,6 @@ const PublicationPage = () => {
     }
   }, [pubData]);
 
-  const fetchPubInfo = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/fetch-info/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify({ pub_id: id }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-
-      setPubData(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   return (
     <div className="m-4 flex flex-col gap-4">
       {title && (
@@ -117,7 +114,7 @@ const PublicationPage = () => {
         </div>
       )}
       {abstractOrder.length !== 0 && (
-        <>
+        <div className="flex gap-4">
           <div className="font-bold">Abstract:</div>
           <div className="flex flex-col gap-4">
             {abstractOrder.map((abstractTitle, idx) => {
@@ -134,7 +131,7 @@ const PublicationPage = () => {
             })}
           </div>
           )
-        </>
+        </div>
       )}
       {id && (
         <div>
@@ -177,12 +174,14 @@ const PublicationPage = () => {
         </ul>
       )}
 
-      <Link
+      <a
         href={`https://pubmed.ncbi.nlm.nih.gov/${id}/`}
+        target="_blank"
+        rel="noopener noreferrer"
         className="text-blue-700 underline"
       >
         Link to publication
-      </Link>
+      </a>
     </div>
   );
 };
