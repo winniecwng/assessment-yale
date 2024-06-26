@@ -6,7 +6,7 @@ To keep the simplicity of the project, I have the api run through only the pubme
 
 - User is able to input a text query and submit the result
 - User is able to input what page they'd like to see the result queries (pagination)
-- User is able to see the title, the id and the publication year
+- User is able to see the title, the id and the publication year in each query
 - User is able to select the query which will go in to individual publications with its detailed information
 - Publication page has all the assessment requirement details, ie id, year, title, etc
 
